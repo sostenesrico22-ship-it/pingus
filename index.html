@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pingu's Gelateria e Cafeteria</title>
+<meta name="description" content="Exemplo de cardápio digital com pedido pelo WhatsApp">
+<style>
+:root{--rosa:#1f4fd8;--rosa2:#ffe3ec;--choc:#14204a;--bg:#f3f7ff}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--choc)}
+.demo{background:#e63946;color:#fff;text-align:center;font-size:12px;padding:6px;font-weight:600}
+header{background:linear-gradient(160deg,#1f4fd8 0%,#2f6bff 60%,#5b8cff 100%);color:#fff;border-bottom:6px solid #ffb703;text-align:center;padding:20px 16px 22px;border-radius:0 0 30px 30px}
+header .logo{display:block;margin:0 auto;width:160px;height:160px;object-fit:contain}header h1{margin:4px 0 2px;font-size:30px;font-family:'Arial Black',Impact,sans-serif;color:#ffd166;text-shadow:3px 3px 0 #e63946}
+header p{margin:4px 0}.badge{display:inline-block;background:#fff3;padding:4px 12px;border-radius:20px;font-size:13px;margin:6px 3px 0}
+.pb{display:inline-block;background:#ffd166;color:#14204a;padding:4px 10px;border-radius:12px;font-size:12px;font-weight:700;margin-top:8px}
+.btns{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}.btns a{background:#fff;color:#1f4fd8;text-decoration:none;padding:8px 14px;border-radius:20px;font-weight:700;font-size:14px}
+nav{position:sticky;top:0;background:var(--bg);display:flex;gap:8px;overflow-x:auto;padding:12px;z-index:5}
+nav button{flex:none;border:2px solid var(--rosa);background:#fff;color:var(--rosa);padding:8px 14px;border-radius:20px;font-weight:600}
+nav button.on{background:var(--rosa);color:#fff}
+main{padding:0 12px 110px;max-width:720px;margin:auto}h2{font-family:'Arial Black',sans-serif;color:#e63946;margin:18px 4px 10px}
+.card{display:flex;gap:12px;background:#fff;border-radius:16px;padding:12px;margin-bottom:10px;box-shadow:0 2px 8px #1f4fd81a;align-items:center}
+.ico{font-size:38px;width:64px;height:64px;display:grid;place-items:center;background:var(--rosa2);border-radius:14px;flex:none}
+.info{flex:1}.info b{display:block}.info small{color:#5a6690}.price{color:#e63946;font-weight:700;margin-top:4px}
+.qty{display:flex;align-items:center;gap:6px}.qty button{width:32px;height:32px;border-radius:50%;border:none;background:var(--rosa);color:#fff;font-size:18px}
+.qty span{min-width:18px;text-align:center;font-weight:700}
+#bar{position:fixed;left:12px;right:12px;bottom:12px;background:#25d366;color:#fff;border:none;border-radius:16px;padding:16px;font-size:16px;font-weight:700;display:none;max-width:696px;margin:auto}
+#drawer{position:fixed;inset:0;background:#0006;display:none;z-index:10}#drawer .p{position:absolute;bottom:0;left:0;right:0;background:#fff;border-radius:22px 22px 0 0;padding:18px;max-height:90vh;overflow:auto;max-width:720px;margin:auto}
+.li{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #eee}
+label{display:block;margin-top:10px;font-size:14px;font-weight:600}input,textarea{width:100%;padding:10px;border:1px solid #ddd;border-radius:10px;font:inherit;margin-top:4px}
+.opt{display:flex;gap:8px;margin-top:6px}.opt label{flex:1;border:2px solid var(--rosa2);border-radius:10px;padding:10px;margin:0;text-align:center}
+.wa{width:100%;background:#25d366;color:#fff;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:700;margin-top:14px}
+.note{font-size:12px;color:#8a8a8a;margin-top:6px;text-align:center}.x{float:right;border:none;background:none;font-size:24px}
+footer{text-align:center;font-size:13px;padding:20px;color:#5a6690}footer a{color:#1f4fd8}
+.lang{position:absolute;top:34px;right:10px;display:flex;gap:4px;z-index:6}.lang button{border:2px solid #fff;background:#fff3;border-radius:12px;font-size:20px;padding:2px 6px}.lang button.on{background:#fff}
+header{position:relative}.mesa{background:#fff;border-radius:16px;padding:12px;margin:12px 0;box-shadow:0 2px 8px #1f4fd81a}.mesa input{font-size:18px;font-weight:700}
+.ex{display:inline-block;background:#fff3cd;color:#8a6d00;font-size:11px;padding:1px 6px;border-radius:8px;margin-left:4px}.kg{color:#8a8a8a;font-style:italic}
+footer{padding-bottom:100px}
+.cat{background:#fff;border-radius:16px;margin-bottom:10px;box-shadow:0 2px 8px #1f4fd81a;overflow:hidden}.cat summary{display:flex;justify-content:space-between;align-items:center;padding:14px;font-family:'Arial Black',sans-serif;color:#e63946;cursor:pointer;list-style:none}.cat summary::after{content:"▾";margin-left:8px}.cat[open] summary::after{content:"▴"}.cat summary small{font-family:system-ui;color:#14204a;font-weight:700;margin-left:auto}
+.cat .card{box-shadow:none;border-top:1px solid #eef;border-radius:0;margin:0;padding:10px 14px}.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{background:var(--rosa2);border-radius:14px;padding:4px 10px;font-size:13px}.counter{margin-top:10px;font-weight:700;color:#1f4fd8}
+</style><link rel="icon" type="image/png" href="favicon.png">
+</head><body>
+<div class="lang"><button id="lpt" onclick="setL('pt')" aria-label="Português">🇧🇷</button><button id="len" onclick="setL('en')" aria-label="English">🇺🇸</button></div>
+<header><img class="logo" src="logo.webp" alt="Pingu's Gelateria" width="160" height="160"><h1>Pingu's</h1><p><b data-t="sub"></b></p><p data-t="slogan"></p>
+<p style="font-size:14px;opacity:.95" data-t="desc"></p>
+<span class="badge" data-t="hours"></span><span class="badge" data-t="loc"></span><br>
+<div class="btns"><a href="https://www.google.com/maps/search/?api=1&query=Rua%20Benjamin%20Constant%2C%20335%2C%20Pontal%2C%20Ilh%C3%A9us%20-%20BA" target="_blank" data-t="map"></a><a href="https://instagram.com/pingus_ilheus" target="_blank">📸 @pingus_ilheus</a></div></header>
+<nav id="tabs"></nav><main><div class="mesa"><label><span data-t="mesaL"></span> *<input id="mesa" inputmode="numeric" placeholder="Ex.: 5" oninput="render()"></label></div><div id="menu"></div></main>
+<button id="bar" onclick="openCart()"></button>
+<div id="drawer" onclick="if(event.target===this)closeCart()"><div class="p">
+<button class="x" onclick="closeCart()">×</button><h2 style="margin-top:0" data-t="cartT"></h2><div id="items"></div>
+<div class="li" style="font-weight:700;border:none"><span data-t="total"></span><span id="total"></span></div>
+<label><span data-t="mesaL"></span> *<input id="mesa2" inputmode="numeric" placeholder="Ex.: 5" oninput="document.getElementById('mesa').value=this.value"></label>
+<label><span data-t="obsL"></span><input id="obs"></label>
+<button class="wa" onclick="finish()" data-t="send"></button>
+<p class="note" data-t="waNote"></p></div></div>
+<footer>Rua Benjamin Constant, 335 – Pontal, Ilhéus-BA<br><span data-t="airport"></span><br><br><span data-t="credit"></span></footer>
+<script>
+const WA="5511994752354"; // WhatsApp da Pingu's
+const T={pt:{sub:"Gelateria e Cafeteria",slogan:"O sabor perfeito em qualquer temperatura! 🍦☕️",desc:"Sorvetes artesanais com sabores incríveis & Cafés com grãos moídos na hora",hours:"🕘 Seg a sex: 10h às 18h30 • Sáb e dom: 11h às 18h",loc:"📍 Pontal • em frente ao Aeroporto",map:"📍 Como chegar",mesaL:"Número da mesa",cartT:"Seu pedido",total:"Total",obsL:"Observação (sabores, etc.)",send:"Enviar pedido",waNote:"📲 O pedido chega no WhatsApp da Pingu's.",airport:"(em frente ao Aeroporto Jorge Amado)",credit:"Feito por IA Connect",ex:"",kg:"R$ 8,45 a cada 100 g",kgL:"valor do kg",view:"🛒 Ver pedido",empty:"Carrinho vazio",needMesa:"Informe o número da mesa",msg:"Olá! Pedido da *Mesa {m}*:",cats:["🍦 Picolés","🍨 Sorvete por quilo","☕️ Cafés","🧋 Milk-shakes","Salgados","Combos","🥤 Bebidas"]},
+en:{sub:"Gelato & Coffee Shop",slogan:"The perfect taste at any temperature! 🍦☕️",desc:"Handmade ice cream with amazing flavors & freshly ground coffee",hours:"🕘 Mon–Fri: 10am–6:30pm • Sat–Sun: 11am–6pm",loc:"📍 Pontal • across from the Airport",map:"📍 Directions",mesaL:"Table number",cartT:"Your order",total:"Total",obsL:"Notes (flavors, etc.)",send:"Send order",waNote:"📲 Your order goes straight to Pingu's WhatsApp.",airport:"(across from Jorge Amado Airport)",credit:"Made by IA Connect",ex:"",kg:"R$ 8.45 per 100 g",kgL:"price per kg",view:"🛒 View order",empty:"Cart is empty",needMesa:"Please enter your table number",msg:"Hello! Order from *Table {m}*:",cats:["🍦 Popsicles","🍨 Ice cream by weight","☕️ Coffee","🧋 Milkshakes","Savory snacks","Combos","🥤 Drinks"]}};
+// categorias: [chave cat, emoji, preço, exemplo?, [[PT,EN,desc PT,desc EN]...]]
+const FR=[["Morango","Strawberry"],["Maracujá","Passion fruit"],["Limão","Lime"],["Manga com capim-limão","Mango with lemongrass"],["Goiaba","Guava"],["Acerola","Acerola (Barbados cherry)"],["Graviola","Soursop"],["Cupuaçu","Cupuaçu"],["Cajá","Cajá (yellow mombin)"],["Coco","Coconut"]];
+const LE=[["Chocolate com nibs","Chocolate with cocoa nibs"],["Paçoca","Paçoca (peanut candy)"],["Mousse de maracujá","Passion fruit mousse"],["Morango ao leite","Strawberries and cream"],["Mousse de limão","Lime mousse"],["Mel de cacau com amora","Cocoa honey with blackberry"],["Mel de cacau com frutas","Cocoa honey with fruits"]];
+const TR=[["Chocolito","Chocolito"],["Trufa de paçoca","Paçoca truffle"],["Trufa de limão","Lime truffle"],["Trufa de maracujá","Passion fruit truffle"],["Ninho trufado","Ninho milk truffle"]];
+const C=[{pt:"Picolé de frutas",en:"Fruit popsicles",e:"🍦🍓🍇",p:4.9,l:FR},{pt:"Picolé ao leite",en:"Milk popsicles",e:"🍦🥛",p:5.8,l:LE},{pt:"Picolé especial (trufado)",en:"Special popsicles (truffle)",e:"🍦🍫",p:8.6,l:TR},{kg:1,pt:"Sorvete por quilo",en:"Ice cream by weight",e:"🍨",l:[["Sorvete no coco","Ice cream in coconut",29.9]]},{pt:"Cafés",en:"Coffee",e:"☕️",l:[["Cappuccino 150 ml","Cappuccino 150 ml",9.9],["Expresso 120 ml","Espresso 120 ml",6.99],["Achocolatado 200 ml","Chocolate milk 200 ml",7.99],["Café com leite 180 ml","Coffee with milk 180 ml",6.99]]},{pt:"Milk-shakes",en:"Milkshakes",e:"🧋",l:[["Milk-shake de Ovomaltine","Ovomaltine milkshake",24],["Milk-shake de Morango","Strawberry milkshake",24]]},{pt:"Salgados",en:"Savory snacks",e:"🧀",l:[["Pão de queijo (unidade)","Cheese bread (each)",2]]},{pt:"Combos",en:"Combos",e:"☕🧀",l:[["Pão de queijo + Expresso","Cheese bread + Espresso",14.9],["Pão de queijo + Café com leite","Cheese bread + Coffee with milk",14.9],["Pão de queijo + Cappuccino","Cheese bread + Cappuccino",17.4],["Pão de queijo + Achocolatado","Cheese bread + Chocolate milk",15.5]]},{pt:"Bebidas",en:"Drinks",e:"🥤",l:[["Red Bull lata","Red Bull can",16.8],["Schweppes lata","Schweppes can",6.8],["Coca-Cola Zero lata","Coca-Cola Zero can",7.6],["Coca-Cola lata","Coca-Cola can",7.6],["Sprite lata","Sprite can",5.98],["Kuat lata","Kuat can",5.8],["Água com gás","Sparkling water",3.95],["Água sem gás Cristal","Still water Cristal",3.5],["Água sem gás Petrópolis","Still water Petrópolis",2.5],["Coca-Cola 1,5 L","Coca-Cola 1.5 L",14.5],["Coca-Cola Zero 1,5 L","Coca-Cola Zero 1.5 L",14.5],["Kuat 1,5 L","Kuat 1.5 L",13.75],["Fanta Uva 2 L","Fanta Grape 2 L",14.99],["Fanta Laranja 2 L","Fanta Orange 2 L",14.99],["Suco natural 300 ml","Fresh juice 300 ml",6.9],["Suco natural 1 litro","Fresh juice 1 liter",16.9],{sub:1,pt:"Cervejas (+18)",en:"Beers (+18)"},["Heineken lata","Heineken can",9.98],["Amstel lata","Amstel can",6.7],["Heineken garrafa","Heineken bottle",11.99]]}];
+const SL=[["Mel de cacau","Cocoa honey"],["Açaí","Açaí"],["Cupuaçu","Cupuaçu"],["Caju","Cashew fruit"],["Graviola","Soursop"],["Cajá","Cajá (yellow mombin)"]];
+T.pt.counter="🧾 Peça no balcão";T.en.counter="🧾 Order at the counter";T.pt.flv="Sabores";T.en.flv="Flavors";T.pt.dairy="Sem leite";T.en.dairy="Dairy-free";T.pt.each="cada";T.en.each="each";
+let L=localStorage.getItem("pl")||"pt";const cart={},items={};const R=v=>"R$ "+v.toFixed(2).replace(".",",");
+function draw(){const t=T[L];document.documentElement.lang=L==="pt"?"pt-BR":"en";document.querySelectorAll("[data-t]").forEach(e=>e.textContent=t[e.dataset.t]);
+document.getElementById("lpt").classList.toggle("on",L==="pt");document.getElementById("len").classList.toggle("on",L==="en");
+let tb="",h="",k=0;C.forEach((c,i)=>{const cn=c[L],eTab=(c.e.match(/\p{Extended_Pictographic}(?:\uFE0F)?/u)||[c.e])[0];tb+=`<button data-s="c${i}" class="${i?"":"on"}" onclick="go('c${i}')">${eTab} ${cn}</button>`;
+h+=`<details id="c${i}" class="cat"${i===0?" open":""}><summary><span>${c.e} ${cn}</span><small>${c.kg?"":c.p?R(c.p)+" "+t.each:""}</small></summary>`;
+if(c.kg){const all=[...FR,...LE,...TR];h+=`<div class="card" style="display:block"><div class="price">${t.kgL}: <span class="kg">${t.kg}</span></div><div style="margin:8px 0 4px;font-weight:700">${t.flv}:</div><div class="chips">${all.map(f=>`<span class="chip">${L==="pt"?f[0]:f[1]}</span>`).join("")}</div><div style="margin:10px 0 4px;font-weight:700">${t.dairy}:</div><div class="chips">${SL.map(f=>`<span class="chip">${L==="pt"?f[0]:f[1]}</span>`).join("")}</div><div class="counter">${t.counter}</div></div>`}
+if(c.l)c.l.forEach(f=>{if(f.sub){h+=`<div style="padding:12px 14px 6px;font-weight:700;color:#e63946;font-family:'Arial Black',sans-serif">${L==="pt"?f.pt:f.en}</div>`;return}const id=k++,p=c.p||f[2],np=c.ex?f[0]:`${c.pt}: ${f[0]}`,ne=c.ex?f[1]:`${c.en}: ${f[1]}`;items[id]={np,ne,p};
+h+=`<div class="card sm"><div class="info"><b>${L==="pt"?f[0]:f[1]}</b><div class="price">${R(p)}${c.ex?`<span class="ex">${t.ex}</span>`:""}</div></div><div class="qty"><button onclick="chg(${id},-1)" aria-label="-">−</button><span id="q${id}">0</span><button onclick="chg(${id},1)" aria-label="+">+</button></div></div>`});
+h+=`</details>`});
+document.getElementById("tabs").innerHTML=tb;document.getElementById("menu").innerHTML=h;document.getElementById("obs").placeholder=L==="pt"?"Ex.: sem açúcar":"E.g.: no sugar";render()}
+function setL(l){L=l;localStorage.setItem("pl",l);draw()}
+const nm=k=>L==="pt"?items[k].np:items[k].ne;
+function go(s){document.getElementById(s).open=true;document.getElementById(s).scrollIntoView({behavior:"smooth"});document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.s===s))}
+function chg(k,d){cart[k]=Math.max(0,(cart[k]||0)+d);if(!cart[k])delete cart[k];render()}
+function tot(){return Object.entries(cart).reduce((s,[k,q])=>s+items[k].p*q,0)}
+function render(){const t=T[L];Object.keys(items).forEach(k=>{const q=document.getElementById("q"+k);if(q)q.textContent=cart[k]||0});const n=Object.values(cart).reduce((a,b)=>a+b,0);const bar=document.getElementById("bar");bar.style.display=n?"block":"none";
+const m=document.getElementById("mesa").value.trim();bar.textContent=`${t.view} (${n}) • ${R(tot())}`+(m?` • ${t.mesaL.split(" ").pop()==="mesa"?"Mesa":"Mesa"} ${m}`:"");if(L==="en"&&m)bar.textContent=`${t.view} (${n}) • ${R(tot())} • Table ${m}`;
+document.getElementById("mesa2").value=m;
+document.getElementById("items").innerHTML=Object.entries(cart).map(([k,q])=>`<div class="li"><span>${q}x ${nm(k)}</span><span>${R(items[k].p*q)}</span></div>`).join("")||`<p>${t.empty}</p>`;document.getElementById("total").textContent=R(tot());if(!n)closeCart()}
+function openCart(){document.getElementById("drawer").style.display="block"}function closeCart(){document.getElementById("drawer").style.display="none"}
+function buildUrl(){const t=T[L],m=document.getElementById("mesa").value.trim(),obs=document.getElementById("obs").value.trim();
+let s=t.msg.replace("{m}",m)+"\n\n"+Object.entries(cart).map(([k,q])=>`• ${q}x ${items[k].np} — ${R(items[k].p*q)}`).join("\n")+`\n\n*Total: ${R(tot())}*`+(obs?"\nObs.: "+obs:"");
+return "https://wa.me/"+WA+"?text="+encodeURIComponent(s)}
+function finish(){if(!Object.keys(cart).length)return;if(!document.getElementById("mesa").value.trim()){document.getElementById("mesa2").focus();return alert(T[L].needMesa)}window.open(buildUrl(),"_blank")}
+const qm=new URLSearchParams(location.search).get("mesa");if(qm)document.getElementById("mesa").value=qm.replace(/\D/g,"").slice(0,4);
+draw();
+</script></body></html>
