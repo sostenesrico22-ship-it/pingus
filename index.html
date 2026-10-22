@@ -47,13 +47,14 @@ footer{padding-bottom:100px}
 <div class="li" style="font-weight:700;border:none"><span data-t="total"></span><span id="total"></span></div>
 <label><span data-t="mesaL"></span> *<input id="mesa2" inputmode="numeric" placeholder="Ex.: 5" oninput="document.getElementById('mesa').value=this.value"></label>
 <label><span data-t="obsL"></span><input id="obs"></label>
-<button class="wa" onclick="finish()" data-t="send"></button>
+<button class="wa" onclick="finish(0)"><span data-t="send"></span> • WhatsApp 1</button>
+<button class="wa" onclick="finish(1)" style="margin-top:8px"><span data-t="send"></span> • WhatsApp 2</button>
 <p class="note" data-t="waNote"></p></div></div>
 <footer>Rua Benjamin Constant, 335 – Pontal, Ilhéus-BA<br><span data-t="airport"></span><br><br><span data-t="credit"></span></footer>
 <script>
-const WA="5511994752354"; // WhatsApp da Pingu's
-const T={pt:{sub:"Gelateria e Cafeteria",slogan:"O sabor perfeito em qualquer temperatura! 🍦☕️",desc:"Sorvetes artesanais com sabores incríveis & Cafés com grãos moídos na hora",hours:"🕘 Seg a sex: 10h às 18h30 • Sáb e dom: 11h às 18h",loc:"📍 Pontal • em frente ao Aeroporto",map:"📍 Como chegar",mesaL:"Número da mesa",cartT:"Seu pedido",total:"Total",obsL:"Observação (sabores, etc.)",send:"Enviar pedido",waNote:"📲 O pedido chega no WhatsApp da Pingu's.",airport:"(em frente ao Aeroporto Jorge Amado)",credit:"Feito por IA Connect",ex:"",kg:"R$ 8,45 a cada 100 g",kgL:"valor do kg",view:"🛒 Ver pedido",empty:"Carrinho vazio",needMesa:"Informe o número da mesa",msg:"Olá! Pedido da *Mesa {m}*:",cats:["🍦 Picolés","🍨 Sorvete por quilo","☕️ Cafés","🧋 Milk-shakes","Salgados","Combos","🥤 Bebidas"]},
-en:{sub:"Gelato & Coffee Shop",slogan:"The perfect taste at any temperature! 🍦☕️",desc:"Handmade ice cream with amazing flavors & freshly ground coffee",hours:"🕘 Mon–Fri: 10am–6:30pm • Sat–Sun: 11am–6pm",loc:"📍 Pontal • across from the Airport",map:"📍 Directions",mesaL:"Table number",cartT:"Your order",total:"Total",obsL:"Notes (flavors, etc.)",send:"Send order",waNote:"📲 Your order goes straight to Pingu's WhatsApp.",airport:"(across from Jorge Amado Airport)",credit:"Made by IA Connect",ex:"",kg:"R$ 8.45 per 100 g",kgL:"price per kg",view:"🛒 View order",empty:"Cart is empty",needMesa:"Please enter your table number",msg:"Hello! Order from *Table {m}*:",cats:["🍦 Popsicles","🍨 Ice cream by weight","☕️ Coffee","🧋 Milkshakes","Savory snacks","Combos","🥤 Drinks"]}};
+const WAS=["5511994752354","5511966443318"]; // WhatsApp 1 e 2 da Pingu's
+const T={pt:{sub:"Gelateria e Cafeteria",slogan:"O sabor perfeito em qualquer temperatura! 🍦☕️",desc:"Sorvetes artesanais com sabores incríveis & Cafés com grãos moídos na hora",hours:"🕘 Seg a sex: 10h às 18h30 • Sáb e dom: 11h às 18h",loc:"📍 Pontal • em frente ao Aeroporto",map:"📍 Como chegar",mesaL:"Número da mesa",cartT:"Seu pedido",total:"Total",obsL:"Observação (sabores, etc.)",send:"Enviar pedido",waNote:"📲 Escolha WhatsApp 1 ou 2 — os dois são da Pingu's.",airport:"(em frente ao Aeroporto Jorge Amado)",credit:"Feito por IA Connect",ex:"",kg:"R$ 8,45 a cada 100 g",kgL:"valor do kg",view:"🛒 Ver pedido",empty:"Carrinho vazio",needMesa:"Informe o número da mesa",msg:"Olá! Pedido da *Mesa {m}*:",cats:["🍦 Picolés","🍨 Sorvete por quilo","☕️ Cafés","🧋 Milk-shakes","Salgados","Combos","🥤 Bebidas"]},
+en:{sub:"Gelato & Coffee Shop",slogan:"The perfect taste at any temperature! 🍦☕️",desc:"Handmade ice cream with amazing flavors & freshly ground coffee",hours:"🕘 Mon–Fri: 10am–6:30pm • Sat–Sun: 11am–6pm",loc:"📍 Pontal • across from the Airport",map:"📍 Directions",mesaL:"Table number",cartT:"Your order",total:"Total",obsL:"Notes (flavors, etc.)",send:"Send order",waNote:"📲 Pick WhatsApp 1 or 2 — both are Pingu's.",airport:"(across from Jorge Amado Airport)",credit:"Made by IA Connect",ex:"",kg:"R$ 8.45 per 100 g",kgL:"price per kg",view:"🛒 View order",empty:"Cart is empty",needMesa:"Please enter your table number",msg:"Hello! Order from *Table {m}*:",cats:["🍦 Popsicles","🍨 Ice cream by weight","☕️ Coffee","🧋 Milkshakes","Savory snacks","Combos","🥤 Drinks"]}};
 // categorias: [chave cat, emoji, preço, exemplo?, [[PT,EN,desc PT,desc EN]...]]
 const FR=[["Morango","Strawberry"],["Maracujá","Passion fruit"],["Limão","Lime"],["Manga com capim-limão","Mango with lemongrass"],["Goiaba","Guava"],["Acerola","Acerola (Barbados cherry)"],["Graviola","Soursop"],["Cupuaçu","Cupuaçu"],["Cajá","Cajá (yellow mombin)"],["Coco","Coconut"]];
 const LE=[["Chocolate com nibs","Chocolate with cocoa nibs"],["Paçoca","Paçoca (peanut candy)"],["Mousse de maracujá","Passion fruit mousse"],["Morango ao leite","Strawberries and cream"],["Mousse de limão","Lime mousse"],["Mel de cacau com amora","Cocoa honey with blackberry"],["Mel de cacau com frutas","Cocoa honey with fruits"]];
@@ -81,10 +82,10 @@ const m=document.getElementById("mesa").value.trim();bar.textContent=`${t.view} 
 document.getElementById("mesa2").value=m;
 document.getElementById("items").innerHTML=Object.entries(cart).map(([k,q])=>`<div class="li"><span>${q}x ${nm(k)}</span><span>${R(items[k].p*q)}</span></div>`).join("")||`<p>${t.empty}</p>`;document.getElementById("total").textContent=R(tot());if(!n)closeCart()}
 function openCart(){document.getElementById("drawer").style.display="block"}function closeCart(){document.getElementById("drawer").style.display="none"}
-function buildUrl(){const t=T[L],m=document.getElementById("mesa").value.trim(),obs=document.getElementById("obs").value.trim();
+function buildUrl(w){const t=T[L],m=document.getElementById("mesa").value.trim(),obs=document.getElementById("obs").value.trim();
 let s=t.msg.replace("{m}",m)+"\n\n"+Object.entries(cart).map(([k,q])=>`• ${q}x ${items[k].np} — ${R(items[k].p*q)}`).join("\n")+`\n\n*Total: ${R(tot())}*`+(obs?"\nObs.: "+obs:"");
-return "https://wa.me/"+WA+"?text="+encodeURIComponent(s)}
-function finish(){if(!Object.keys(cart).length)return;if(!document.getElementById("mesa").value.trim()){document.getElementById("mesa2").focus();return alert(T[L].needMesa)}window.open(buildUrl(),"_blank")}
+return "https://wa.me/"+WAS[w||0]+"?text="+encodeURIComponent(s)}
+function finish(w){if(!Object.keys(cart).length)return;if(!document.getElementById("mesa").value.trim()){document.getElementById("mesa2").focus();return alert(T[L].needMesa)}window.open(buildUrl(w),"_blank")}
 const qm=new URLSearchParams(location.search).get("mesa");if(qm)document.getElementById("mesa").value=qm.replace(/\D/g,"").slice(0,4);
 draw();
 </script></body></html>
