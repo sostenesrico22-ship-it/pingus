@@ -47,12 +47,11 @@ footer{padding-bottom:100px}
 <div class="li" style="font-weight:700;border:none"><span data-t="total"></span><span id="total"></span></div>
 <label><span data-t="mesaL"></span> *<input id="mesa2" inputmode="numeric" placeholder="Ex.: 5" oninput="document.getElementById('mesa').value=this.value"></label>
 <label><span data-t="obsL"></span><input id="obs"></label>
-<button class="wa" onclick="finish(0)"><span data-t="send"></span> • WhatsApp 1</button>
-<button class="wa" onclick="finish(1)" style="margin-top:8px"><span data-t="send"></span> • WhatsApp 2</button>
+<button class="wa" onclick="finish(0)"><span data-t="send"></span></button>
 <p class="note" data-t="waNote"></p></div></div>
 <footer>Rua Benjamin Constant, 335 – Pontal, Ilhéus-BA<br><span data-t="airport"></span><br><br><span data-t="credit"></span></footer>
 <script>
-const WAS=["5511994752354","5511966443318"]; // WhatsApp 1 e 2 da Pingu's
+const WAS=["5511966443318"]; // WhatsApp da Pingu's
 const T={pt:{sub:"Gelateria e Cafeteria",slogan:"O sabor perfeito em qualquer temperatura! 🍦☕️",desc:"Sorvetes artesanais com sabores incríveis & Cafés com grãos moídos na hora",hours:"🕘 Seg a sex: 10h às 18h30 • Sáb e dom: 11h às 18h",loc:"📍 Pontal • em frente ao Aeroporto",map:"📍 Como chegar",mesaL:"Número da mesa",cartT:"Seu pedido",total:"Total",obsL:"Observação (sabores, etc.)",send:"Enviar pedido",waNote:"📲 Escolha WhatsApp 1 ou 2 — os dois são da Pingu's.",airport:"(em frente ao Aeroporto Jorge Amado)",credit:"Feito por IA Connect",ex:"",kg:"R$ 8,45 a cada 100 g",kgL:"valor do kg",view:"🛒 Ver pedido",empty:"Carrinho vazio",needMesa:"Informe o número da mesa",msg:"Olá! Pedido da *Mesa {m}*:",cats:["🍦 Picolés","🍨 Sorvete por quilo","☕️ Cafés","🧋 Milk-shakes","Salgados","Combos","🥤 Bebidas"]},
 en:{sub:"Gelato & Coffee Shop",slogan:"The perfect taste at any temperature! 🍦☕️",desc:"Handmade ice cream with amazing flavors & freshly ground coffee",hours:"🕘 Mon–Fri: 10am–6:30pm • Sat–Sun: 11am–6pm",loc:"📍 Pontal • across from the Airport",map:"📍 Directions",mesaL:"Table number",cartT:"Your order",total:"Total",obsL:"Notes (flavors, etc.)",send:"Send order",waNote:"📲 Pick WhatsApp 1 or 2 — both are Pingu's.",airport:"(across from Jorge Amado Airport)",credit:"Made by IA Connect",ex:"",kg:"R$ 8.45 per 100 g",kgL:"price per kg",view:"🛒 View order",empty:"Cart is empty",needMesa:"Please enter your table number",msg:"Hello! Order from *Table {m}*:",cats:["🍦 Popsicles","🍨 Ice cream by weight","☕️ Coffee","🧋 Milkshakes","Savory snacks","Combos","🥤 Drinks"]}};
 // categorias: [chave cat, emoji, preço, exemplo?, [[PT,EN,desc PT,desc EN]...]]
